@@ -1,0 +1,54 @@
+<script src="main.js"></script>
+
+<p id="scroll_indicator">number</p>
+<div id="redbox" class="box200">I am the red box</div>
+<div id="bluebox" class="box200">I am the blue box</div>
+<div id="greenbox" class="box200">I am the green box</div>
+
+<style>
+    *:not(html) {
+        position:fixed
+    }
+
+    body {
+        height: 1000px;
+        position: absolute !important;
+        overflow-y: auto;
+        width:90vw;
+    }
+
+    .box200 {
+        width:200px;
+        height:200px;
+    }
+
+    #redbox {
+        background-color: red;
+    }
+
+    #bluebox {
+        background-color: blue;
+    }
+
+    #greenbox {
+        background-color: green;
+    }
+</style>
+
+<script>
+
+    var cur_anim = new scrollAnimationScene(0,1000);
+    cur_anim.addElement_position("redbox",0,500,(n)=>{n/5},(n)=>{n/5});
+    cur_anim.addElement_position("bluebox",250,750,(n)=>{n/5},(n)=>{(n/5)+100});
+    cur_anim.addElement_position("greenbox",500,1000,(n)=>{n/10},(n)=>{n/5});
+
+
+    const scroll_indicator=document.getElementById("scroll_indicator");
+
+    addEventListener("scroll", (event) => {
+        scrollAmount=document.documentElement.scrollTop || document.body.scrollTop;
+        scroll_indicator.innerText=Math.round(scrollAmount*100)/100;
+
+        cur_anim.tick(scrollAmount);
+    })
+</script>
